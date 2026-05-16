@@ -1,7 +1,7 @@
 
-# KINGPT
+# KinGPT
 
-[![HuggingFace](https://img.shields.io/badge/🤗_HuggingFace-Models-yellow?style=for-the-badge)](https://huggingface.co/ethanjtang/KINGPT) <br>
+[![HuggingFace](https://img.shields.io/badge/🤗_HuggingFace-Models-yellow?style=for-the-badge)](https://huggingface.co/ethanjtang/KinGPT) <br>
 
 Chess-based SLM trained exclusively on position (FEN) + best move (UCI/SAN) pairs without move history context. 
 
@@ -9,7 +9,7 @@ A baseline for comparison against any claims of emergent LLM "mastery" or "under
 
 ## Evaluations
 
-All variants of KINGPT were tested on a random sample of n=100 puzzles from the validation set of puzzles (n=1000).
+All variants of KinGPT were tested on a random sample of n=100 puzzles from the validation set of puzzles (n=1000).
 
 Training data for Woodpecker/Chimera variants was filtered to remove any shared positions (FEN-level*) between the validation and training set of puzzle positions.
 
@@ -31,11 +31,11 @@ Training data for Woodpecker/Chimera variants was filtered to remove any shared 
 
 ## How To Run
 
-All training code for KINGPT was forked directly from karpathy's [nanoGPT](https://github.com/karpathy/nanoGPT) repository. 
+All training code for KinGPT was forked directly from karpathy's [nanoGPT](https://github.com/karpathy/nanoGPT) repository. 
 
 I would highly recommend to follow the instructions provided there on how to hack it to your needs instead of reading my config.
 
-I used the instructions for training a mini-Shakespeare model (with char-level tokenization) to train all KINGPT variants.
+I used the instructions for training a mini-Shakespeare model (with char-level tokenization) to train all KinGPT variants.
 
 ### Dependencies
 
@@ -55,33 +55,33 @@ pip install torch numpy transformers datasets tiktoken wandb tqdm
 
 ### Inference
 
-`.\GAMBIT-puzzle-evals\eval_kingpt.py` - Evaluate all KINGPT variants for the (same) n=300 sample of n=100 mate-in-1, mate-in-2, and mate-in-3 theme puzzles used in [GAMBIT](https://github.com/ethanjtang/GAMBIT).
+`.\GAMBIT-puzzle-evals\eval_kingpt.py` - Evaluate all KinGPT variants for the (same) n=300 sample of n=100 mate-in-1, mate-in-2, and mate-in-3 theme puzzles used in [GAMBIT](https://github.com/ethanjtang/GAMBIT).
 
 `.\KINGPT-training\sample.py` - Forked from karpathy's original directory, contains an example of prompting the model.
 
-## KINGPT Variants
+## KinGPT Variants
 
 ### Vocab/Size
 
-KINGPT variants are 25.20M parameter SLMs (~1/5 the size of GPT-2) which use a character-level tokenization (1 char = 1 token vs. BPE which is [~3-4 char = 1 token](https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them)).
+KinGPT variants are 25.20M parameter SLMs (~1/5 the size of GPT-2) which use a character-level tokenization (1 char = 1 token vs. BPE which is [~3-4 char = 1 token](https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them)).
 
 Each variant has a vocab 58 unique characters covering FEN syntax + UCI moves + `<|position-start|>` and `<|position-end|>` markers (no padding tokens due to fixed block size).
 
-### KINGPT-Woodpecker
+### KinGPT-Woodpecker
 
-KINGPT variant trained on 13,341,057 unique puzzle positions (FEN + best move pairs).
+KinGPT variant trained on 13,341,057 unique puzzle positions (FEN + best move pairs).
 
 Achieved `train loss 0.3590, val loss 0.3704` on puzzles corpus after training for ~500B tokens.
 
-### KINGPT-Beaver
+### KinGPT-Beaver
 
-KINGPT variant trained on 54,681 unique positions generated from 1050 Stockfish 18 self-play games.
+KinGPT variant trained on 54,681 unique positions generated from 1050 Stockfish 18 self-play games.
 
 Achieved `train loss 0.0974, val loss 1.7554` (overfitting due to small dataset size) on selfplay corpus after training for ~25B tokens.
 
-### KINGPT-Chimera
+### KinGPT-Chimera
 
-KINGPT variant trained on combined dataset of 13,395,738 Woodpecker and Beaver variant positions.
+KinGPT variant trained on combined dataset of 13,395,738 Woodpecker and Beaver variant positions.
 
 Achieved `train loss 0.3594, val loss 0.3710` on combined corpus after training for ~500B tokens.
 
@@ -117,7 +117,7 @@ Meanwhile, in the subset of games played by Stockfish 18 at FULL POWER, 1070/706
 ## TODOs
 
 - (Optional) Question if training a chess-focused large language model is even worth it when we have Stockfish (+ the many other chess engines) as external verifiers, which can either be called directly by general LLMs (via a wrapper) or utilized in a LLM-Modulo system (as an external verifier to check LLM generation).
-- Train a balanced variant of KINGPT using a mix of puzzle positions, human games, and inter/intra-engine games.
+- Train a balanced variant of KinGPT using a mix of puzzle positions, human games, and inter/intra-engine games.
 - Use RLHF/RLVR/PPO/GRPO/etc. during training to make the model better.
 - Use LLM-Modulo + other verifier-in-the-loop methods during inference to make the model better.
 - ...
@@ -126,8 +126,4 @@ Meanwhile, in the subset of games played by Stockfish 18 at FULL POWER, 1070/706
 
 All code in this repo was initially forked from Andrej Karpathy's [nanoGPT repository](https://github.com/karpathy/nanoGPT).
 
-The author acknowledges Research Computing at Arizona State University for providing computing and storage resources to train all variants of KINGPT.
-
-## Citations
-
-**Citations COMING SOON**
+The author acknowledges Research Computing at Arizona State University for providing computing and storage resources to train all variants of KinGPT.
